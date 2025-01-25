@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Keyword to QR Display</title>
+  <style>
+    /* Dark Theme Styles */
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #121212;
+      color: #fff;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 50px auto;
+      text-align: center;
+      background: #1e1e1e;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      color: #4caf50;
+    }
+
+    #botEmoji {
+      font-size: 3rem;
+    }
+
+    textarea {
+      width: 100%;
+      height: 120px;
+      margin-bottom: 20px;
+      font-size: 16px;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      background-color: #2a2a2a;
+      color: #fff;
+      outline: none;
+      resize: none;
+    }
+
+    button {
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      cursor: pointer;
+      font-size: 16px;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    #results {
+      margin-top: 30px;
+    }
+
+    #results h3 {
+      color: #4caf50;
+      margin-bottom: 15px;
+    }
+
+    #qrDisplay {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    #qrDisplay img {
+      width: 150px;
+      height: 150px;
+      border: 2px solid #4caf50;
+      border-radius: 10px;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    #qrDisplay img:hover {
+      transform: scale(1.1);
+      box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+    }
+
+    footer {
+      margin-top: 40px;
+      color: #bbb;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>
+      <span id="botEmoji">🤖</span> Keyword to QR Display
+    </h1>
+    <textarea id="textInput" placeholder="Type your text here..."></textarea>
+    <button id="findButton">Find QR Codes</button>
+    <div id="results">
+      <h3>Matched QR Codes:</h3>
+      <div id="qrDisplay"></div>
+    </div>
+  </div>
+
+  <footer>
+    Made with ❤️ by Your Panzerlied Bot 🤖
+  </footer>
+
+  
+
+    <script>
+        // Keywords, their corresponding QR image paths, and explanations
+        const dataset = [
+          { keyword: "human heart", qrPath: "ar_models/human-heart.png", explanation: "The human heart pumps blood through the body." },
+          { keyword: "taj mahal", qrPath: "ar_models/taj.png", explanation: "Taj Mahal is a famous landmark in India." },
+          { keyword: "human brain", qrPath: "ar_models/human-brain.png", explanation: "The human brain is the control center of the body." },
+          { keyword: "human anatomy", qrPath: "ar_models/h-anatomy.png", explanation: "Human anatomy is the study of body structure." }
+        ];
+      
+        // Event Listener for Button Click
+        document.getElementById("findButton").addEventListener("click", () => {
+          const inputText = document.getElementById("textInput").value.toLowerCase(); // Case-insensitive input
+          const qrDisplay = document.getElementById("qrDisplay");
+          qrDisplay.innerHTML = ""; // Clear previous results
+      
+          let matchFound = false;
+      
+          // Search for Matching Keywords
+          for (const entry of dataset) {
+            if (inputText.includes(entry.keyword.toLowerCase())) {
+              matchFound = true;
+      
+              // Create the QR code image
+              const img = document.createElement("img");
+              img.src = entry.qrPath;
+              img.alt = `QR Code for ${entry.keyword}`;
+              qrDisplay.appendChild(img);
+      
+              // Display the explanation below the QR code
+              const explanationDiv = document.createElement("p");
+              explanationDiv.textContent = entry.explanation;
+              qrDisplay.appendChild(explanationDiv);
+            }
+          }
+      
+          // No Match Found
+          if (!matchFound) {
+            qrDisplay.innerHTML = `<p style="color: #f44336;">No keywords matched. 🤔</p>`;
+          }
+        });
+
+      
+  </script>
+</body>
+</html>
+
